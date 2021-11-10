@@ -24,7 +24,7 @@ public class UserServiceTest {
         }
     }
 
-    @Test
+  @Test
     public void createUsersTable() {
         try {
             userService.dropUsersTable();
