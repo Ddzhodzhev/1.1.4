@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -63,7 +64,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = sessionF.openSession()) {
             transaction = session.beginTransaction();
-            session.createSQLQuery(" DELETE FROM Users WHERE id =" + id).executeUpdate();
+            session.createQuery("delete User where id = "+id);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +80,7 @@ public class UserDaoHibernateImpl implements UserDao {
         List<User> list = null;
         try (Session session = sessionF.openSession()) {
             transaction = session.beginTransaction();
-            list = session.createSQLQuery("SELECT * FROM users").addEntity(User.class).list();
+            list = session.createQuery("from User").getResultList();
             transaction.commit();
             list.forEach(user -> System.out.println(user));
         } catch (Exception e) {
@@ -97,8 +98,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = sessionF.openSession()) {
             transaction = session.beginTransaction();
-            session.createQuery("DELETE FROM User ").executeUpdate();
-            ;
+            session.createQuery("delete User ").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
